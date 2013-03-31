@@ -21,6 +21,7 @@ public class Triangle {
 			-0.5f, -0.5f,  0.0f,		// V1 - first vertex (x,y,z)
 			 0.5f, -0.5f,  0.0f,		// V2 - second vertex
 			 0.0f,  0.5f,  0.0f			// V3 - third vertex
+//			 1.0f,  0.5f,  0.0f			// V3 - third vertex
 	};
 	
 	public Triangle() {

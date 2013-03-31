@@ -6,6 +6,7 @@ package net.obviam.opengl;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import android.content.Context;
 import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
 
@@ -15,11 +16,15 @@ import android.opengl.GLSurfaceView.Renderer;
  */
 public class GlRenderer implements Renderer {
 
-	private Triangle 	triangle;	// the triangle to be drawn
+	private Square 		square;		// the square
+	private Context 	context;
 	
 	/** Constructor to set the handed over context */
-	public GlRenderer() {
-		this.triangle = new Triangle();
+	public GlRenderer(Context context) {
+		this.context = context;
+		
+		// initialise the square
+		this.square = new Square();
 	}
 
 	@Override
@@ -33,9 +38,9 @@ public class GlRenderer implements Renderer {
 		// Drawing
 		gl.glTranslatef(0.0f, 0.0f, -5.0f);		// move 5 units INTO the screen
 												// is the same as moving the camera 5 units away
-//		gl.glScalef(0.5f, 0.5f, 0.5f);			// scale the triangle to 50% 
+//		gl.glScalef(0.5f, 0.5f, 0.5f);			// scale the square to 50% 
 												// otherwise it will be too large
-		triangle.draw(gl);						// Draw the triangle
+		square.draw(gl);						// Draw the triangle
 
 	}
 
@@ -58,6 +63,19 @@ public class GlRenderer implements Renderer {
 
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
+		// Load the texture for the square
+		square.loadGLTexture(gl, this.context);
+		
+		gl.glEnable(GL10.GL_TEXTURE_2D);			//Enable Texture Mapping ( NEW )
+		gl.glShadeModel(GL10.GL_SMOOTH); 			//Enable Smooth Shading
+		gl.glClearColor(0.0f, 0.0f, 0.0f, 0.5f); 	//Black Background
+		gl.glClearDepthf(1.0f); 					//Depth Buffer Setup
+		gl.glEnable(GL10.GL_DEPTH_TEST); 			//Enables Depth Testing
+		gl.glDepthFunc(GL10.GL_LEQUAL); 			//The Type Of Depth Testing To Do
+		
+		//Really Nice Perspective Calculations
+		gl.glHint(GL10.GL_PERSPECTIVE_CORRECTION_HINT, GL10.GL_NICEST); 
+
 	}
 
 }

@@ -28,7 +28,7 @@ public class Run extends Activity {
         
         // set our renderer to be the main renderer with
         // the current activity context
-        glSurfaceView.setRenderer(new GlRenderer());
+        glSurfaceView.setRenderer(new GlRenderer(this));
         setContentView(glSurfaceView);
     }
 
